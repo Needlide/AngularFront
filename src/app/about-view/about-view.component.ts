@@ -38,8 +38,6 @@ onEdit(): void
       }
     });
 
-console.log(role)
-
     if (role == Roles.Admin)
       {
         this.visible = true;

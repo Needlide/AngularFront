@@ -1,1 +1,56 @@
-<p>url-view works!</p>
+<div *ngIf="errorMessage">
+<h3>{{errorMessage}}</h3>
+</div>
+
+<form (ngSubmit)="onSubmit()">
+    <input type="url" [(ngModel)]="url.url" name="urlLink"/>
+    <button type="submit">Submit</button>
+</form>
+
+<table mat-table [dataSource]="dataSource">
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef>ID</th>
+    <td mat-cell *matCellDef="let urlModel">{{ urlModel.id }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="originalUrl">
+    <th mat-header-cell *matHeaderCellDef>Original URL</th>
+    <td mat-cell *matCellDef="let urlModel">{{ urlModel.originalUrl }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="shortenedUrl">
+    <th mat-header-cell *matHeaderCellDef>Shortened URL</th>
+    <td mat-cell *matCellDef="let urlModel">
+      <a href="{{ urlModel.originalUrl }}">{{ urlModel.shortenedUrl }}</a>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="delete">
+    <th mat-header-cell *matHeaderCellDef>Delete</th>
+    <td mat-cell *matCellDef="let urlModel">
+      <button mat-icon-button color="warn" (click)="deleteUrl(urlModel.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="info">
+    <th mat-header-cell *matHeaderCellDef>Info</th>
+    <td mat-cell *matCellDef="let urlModel">
+      <button mat-icon-button color="warn" (click)="showUrlInfo(urlModel.id)">
+        <mat-icon>info</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr
+    mat-header-row
+    *matHeaderRowDef="['id', 'originalUrl', 'shortenedUrl', 'delete', 'info']"
+  ></tr>
+  <tr
+    mat-row
+    *matRowDef="let row; columns: ['id', 'originalUrl', 'shortenedUrl', 'delete', 'info']"
+  ></tr>
+</table>
+
+<app-url-info *ngIf="showInfo" [urlId]="urlInfoId"></app-url-info>

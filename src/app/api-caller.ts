@@ -5,6 +5,8 @@ import { UrlModel } from './models/url';
 import { UserResponse } from './models/userResponse';
 import { RegistrationModel } from './models/registration';
 import { LoginModel } from './models/login';
+import { SimpleUrl } from './models/simpleUrl';
+import { FullUrl } from './models/fullUrl';
 
 @Injectable({
   providedIn: 'root',
@@ -28,9 +30,9 @@ export class ApiCaller {
       .pipe(catchError(this.handleError));
   }
 
-  getInfo(urlId: number): Observable<UrlModel> {
+  getInfo(urlId: number): Observable<FullUrl> {
     return this.http
-      .post<UrlModel>(this.getInfoUrlPath, urlId)
+      .post<FullUrl>(this.getInfoUrlPath, urlId)
       .pipe(catchError(this.handleError));
   }
 
@@ -42,7 +44,7 @@ export class ApiCaller {
       .pipe(catchError(this.handleError));
   }
 
-  postUrl(url: string): Observable<string> {
+  postUrl(url: SimpleUrl): Observable<string> {
     return this.http
       .post<string>(this.postUrlPath, url)
       .pipe(catchError(this.handleError));
